@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-up</title>
+    <link rel="icon" href="">
+    <link rel="stylesheet" href="../css/sign-up.css">
+<body>
+    <div class="container">
+        <div class="left-section">
+            <h1>Farming</h1>
+            <p>Helps you connect and share with the people in your farming.</p>
+        </div>
+        <div class="right-section">
+            <div class="login-container">
+                <form action="/sign-up" method="POST">
+                    {{#if msg}}
+                        <p style="color: red">{{msg}}</p>
+                    {{/if}}
+                    <div class="input-group">
+                        <input type="text" name="name" placeholder="Enter Your Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" name="ph" placeholder="Enter Phone Number" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="email" name="email" placeholder="Email address " required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="password" name="re_password" placeholder="Re-enter Password">
+                    </div>
+                    <button type="submit" class="login-button">Sign up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

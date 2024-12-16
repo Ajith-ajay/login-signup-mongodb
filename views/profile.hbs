@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farming Profile</title>
+    <link rel="icon" href="">
+    <link rel="stylesheet" href="../css/profile.css">
+<body>
+    <div class="container">
+        <div class="left-section">
+            <h1>Hello {{name}}</h1>
+            <p>Helps you connect and share with the people in your farming.</p>
+        </div>
+        <div class="right-section">
+            <div class="login-container">
+                <form action="/profile" method="POST">
+                   <header class="photo">
+                        <img src="" alt="" class="pic">
+                        <h1>{{name}}</h1>
+                   </header>
+                   <section>
+                        <h4>About me</h4>
+                        <ul>
+                            <li>Email : {{mail}}</li>
+                            <li>Phone : {{phone}}</li>
+                        </ul>
+                   </section>
+                    <a href="#" class="forgot-password">Forgotten password?</a>
+                    <center><button type="button" class="logout-account-button">Log out</button></center>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

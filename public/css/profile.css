@@ -1,0 +1,137 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 900px;
+    max-width: 90%;
+}
+
+.left-section {
+    flex: 1;
+    padding-right: 50px;
+    padding-top: 24vh;
+}
+
+.left-section h1 {
+    font-size: 48px;
+    color: #42b72a;
+    margin: 0;
+}
+
+.left-section p {
+    font-size: 24px;
+    color: #1c1e21;
+    margin-top: -0.1vh;
+}
+
+.right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: start;
+    box-shadow: 0 0 0.5vh #808080;
+}
+
+.photo{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.pic{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+section{
+    margin-bottom: 10px;
+    padding: 0 20px;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+}
+
+ul li{
+    padding: 10px 0;
+}
+
+.forgot-password {
+    display: block;
+    margin: 10px 0;
+    color: #42b72a;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: end;
+}
+
+.forgot-password:hover{
+    color: red;
+}
+
+.logout-account-button {
+    background-color: #42b72a;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    width: 21%;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.logout-account-button:hover {
+    background-color: red;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-section {
+        padding-right: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .left-section h1 {
+        font-size: 36px;
+    }
+
+    .left-section p {
+        font-size: 18px;
+    }
+
+    .right-section {
+        width: 100%;
+    }
+
+    .login-container {
+        width: 90%;
+    }
+}
