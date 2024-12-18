@@ -1,85 +1,76 @@
 const express = require('express');
-const sql = require('./database');          //importing the database connections
-const app = express.Router();               //saying the file to express as route file
+const userModel = require('../models/userModel');
+const bcrypt = require('bcrypt');
+const app = express.Router();          
 
-app.get('/',(req,res,next)=>{               //Staring the web page from the root(index) file 
+app.get('/',(req,res)=>{
     res.render('index');
 });
 
-app.get('/login',(req,res,next)=>{          //redirecting to the login page
+app.get('/login',(req,res)=>{
     res.render('login',{
-        msg : null
+        msg: null
     });
 });
 
-app.post('/login',(req,res,next)=>{         //handling the login page in post method(when the inputs are send)
+app.post('/login',async (req,res)=>{
     const {email,password} = req.body;
-    sql.query('select * from admin1 where email=?',[email],(err,result)=>{          //checking the email in database 
-        if(err){
-            console.error("Error executing query ",err.message);
-            return;
-        }
-        if (result.length === 0) {          //founding the match (length == 0 no match)
-            // console.log("No match found");  
-            res.render('sign-up',{
-                error : true,
-                msg : 'Create a new account'
-            });
-        } else {
-            // console.log(result);
-            const hashedPassword = result[0].pass;
-            if (password === hashedPassword) {
+    try {
+        const result = await userModel.findOne({email:email});
+        if (result) {
+            const pass = await bcrypt.compare(password,result.password);
+            if (pass) {
                 res.render('profile',{
-                    msg : null,
-                    name : result[0].name,
-                    mail : result[0].email,
-                    phone : result[0].phone
+                    name:result.name,
+                    email:result.email,
+                    phone:result.phone
                 });
             } else {
                 res.render('login',{
-                    msg : 'Invalid password'
-                })
+                    msg:'incorrect password'
+                });
             }
+        } else {
+            res.render('sign-up',{
+                msg:'Account does not exist create new one'
+            })
         }
-    })
+    } catch (error) {
+        console.log('Error',error);
+    }
 })
 
-app.get('/sign-up',(req,res,next)=>{
+app.get('/sign-up',(req,res)=>{
     res.render('sign-up',{
-        msg : null
+        msg: null
     });
 });
 
-app.post('/sign-up',(req,res,next)=>{
-    const {name,ph,email,password,re_password} = req.body;
-    sql.query('select * from admin1 where email=?',[email],(err,result)=>{
-        if(err) {
-            console.error("Error executing query ",err.message);
-            return;
-        }
-        if (result.length === 0) {
+app.post('/sign-up',async (req,res)=>{
+    const {name,email,password,ph,re_password} = req.body;
+    const hashedPassword = await bcrypt.hash(password,10);
+    try {
+        const result = await userModel.findOne({email:email});
+        if (!result) {
             if (password === re_password) {
-                sql.query('insert into admin1 (name, email, pass, phone) values (?, ?, ?, ?)',[name, email, password, ph],(err,result)=>{
-                    if (err) {
-                        console.error("Error executing query ",err.message);
-                        return;
-                    } else {
-                        res.render('login',{
-                            msg : 'Account Created Successfully Log in to your account'
-                        });
-                    }
+                const userDetail = new userModel({email:email, name:name, password:hashedPassword, phone:ph});
+                userDetail.save();
+                return res.render('login',{
+                    msg: 'Account created successfully...Login to continue'
                 });
             } else {
                 res.render('sign-up',{
-                    msg : "re-enter your password correctly"
-                });
-            }   
+                    msg: 'Password and re-password do not match'
+                })
+            }
         } else {
             res.render('login',{
-                msg : 'Email already exists'
-            })
+                msg: 'Account already exists'
+            });
         }
-    });
-});
+    } catch (error) {
+        console.log('Error',error);
+    }
+})
 
 module.exports = app;

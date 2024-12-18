@@ -1,15 +1,17 @@
-const express = require("express");             //for using the express.js framework 
-const hbs = require("express-handlebars");      //for view engine
-const admin = require('./routes/admin');        //routes 
-const body = require('body-parser');            //changing the data format from the web page
+const express = require("express");           
+const hbs = require("express-handlebars");      
+const admin = require('./routes/admin');         
+const body = require('body-parser');    
+const db = require('./db');
+db.createDatabase();       
 const app = express();
 
-app.use(express.static('public'));              //declaring the static folder to use css for the web page
-app.use(body.urlencoded({extended : true}));    //using the body parser
-app.engine('hbs',hbs.engine({extname : '.hbs',defaultLayout : false}));     //setting the handlebars view engine
+app.use(express.static('public'));             
+app.use(body.urlencoded({extended : true}));    
+app.engine('hbs',hbs.engine({extname : '.hbs',defaultLayout : false}));   
 app.set('view engine', 'hbs');
-app.use(admin);                                 //say the framework to use the route files
+app.use(admin);                               
 
-app.listen(8080,()=>{                           //starting the port at 8080(choose any number)
+app.listen(8080,()=>{                         
     console.log("Server running on http://localhost:8080/");
 });
